@@ -95,11 +95,16 @@ def replan(q0,M,mu,stage):
     assert err<2e-7 and obj<2e-7,(err,obj)
     return q
 
-def separation(seed,N=256):
+def separation(seed,N=256,record_details=False):
     rng=np.random.default_rng(seed);y=np.array([0.,1.,.5,.5,0.]);yd=y.copy()
     E=Ed=0.;S=np.zeros(2);loss=np.zeros((N,7));damage=loss.copy();sm=SharedControllerMaster(N,2)
     opportunity=np.zeros((N,2));captured=opportunity.copy();hw=np.ones(2)/2
     heta=math.sqrt(8*math.log(2)/N)/2;costs=[]
+    # Optional traces support the appendix horizon sweep without changing this
+    # generator, its default outputs, or its original main-figure experiment.
+    if record_details:
+        occupancies=np.zeros((N,6,5));early_eafr=np.zeros((N,5))
+        score_history=np.zeros((N,2));bits=np.zeros(N,dtype=np.int8)
     for n in range(N):
         z=rng.integers(2);c=np.array([0.,0.,float(z),float(1-z),1.]);M=np.array([0.,1.,0.,0.,0.])
         eta=2/math.sqrt(5+E);etad=2/math.sqrt(5+Ed);b=y.copy()
@@ -110,19 +115,27 @@ def separation(seed,N=256):
             before=q.copy();oracle=replan(before,c,0.,l)
             opportunity[n,l]=max(0.,c@(before-oracle))
             q=replan(before,f,math.sqrt(oldS[l])/(2*(2-l)),l)
+            if record_details and l==0:early_eafr[n]=q
             d=q-before;delta=c@d;captured[n,l]=-delta
             # Only oldS is used this episode; no current-feedback leakage.
             if delta>1e-8:S[l]+=(max(0.,(c-f)@d)/np.abs(d).sum())**2
         hedge=hw[0]*b+hw[1]*rolling
         plans=np.array([b,dep,rolling,fixed,hedge,q]);loss[n,:6]=plans@c
+        if record_details:
+            occupancies[n]=plans;score_history[n]=S;bits[n]=z
         loss[n,6]=sm.combine([c@b,c@q,c@rolling])
         damage[n]=np.maximum(loss[n]-c@b,0.)
         hw*=np.exp(-heta*np.array([c@b,c@rolling]));hw/=hw.sum()
         y=project(y-eta*c);yd=project(yd-etad*c);E+=c@c;Ed+=np.sum((c-M)**2);costs.append(c)
     opt=linprog(np.sum(costs,axis=0),A_ub=G[None,:],b_ub=[1.],A_eq=EQ,b_eq=np.ones(2),bounds=[(0,1)]*5,method='highs').fun
     assert damage[:,5].sum()<=4*(2*np.sqrt(S[0])+np.sqrt(S[1]))+1e-5
-    return {'loss':loss,'damage':damage,'regret':loss.sum(0)-opt,'opportunity':opportunity,
+    result={'loss':loss,'damage':damage,'regret':loss.sum(0)-opt,'opportunity':opportunity,
             'captured':captured,'shared_master_bound':sm.exact_suffix_bound}
+    if record_details:
+        result.update({'occupancies':occupancies,'early_eafr':early_eafr,
+                       'stage_score_history':score_history,'bits':bits,
+                       'static_comparator_loss':float(opt)})
+    return result
 
 def scalar_plan(b,gap,S,cap=1.,fixed=None):
     mu=np.sqrt(np.asarray(S))/2 if fixed is None else np.broadcast_to(fixed,np.asarray(S).shape)

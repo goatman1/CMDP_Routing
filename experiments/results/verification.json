@@ -14,7 +14,7 @@
     "shared_master_mass_checks": 43520,
     "max_shared_master_mass_residual": 5.662137425588298e-15
   },
-  "seconds": 35.351201100000004,
+  "seconds": 28.9136207,
   "python": "3.8.2 (tags/v3.8.2:7b3ab59, Feb 25 2020, 23:03:10) [MSC v.1916 64 bit (AMD64)]",
   "platform": "Windows-10-10.0.19041-SP0",
   "processor": "Intel64 Family 6 Model 141 Stepping 1, GenuineIntel",

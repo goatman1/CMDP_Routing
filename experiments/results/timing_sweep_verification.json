@@ -1,0 +1,105 @@
+{
+  "all_checks_passed": true,
+  "horizons": [
+    64,
+    128,
+    256,
+    512,
+    1024,
+    2048,
+    4096
+  ],
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+  ],
+  "pairing": "Common fair-bit stream prefix across methods and horizons within each seed.",
+  "resource_model": "Known deterministic g=(1,0,1,1,0), B=1; K_n=Q_B.",
+  "initialization": [
+    0.0,
+    1.0,
+    0.5,
+    0.5,
+    0.0
+  ],
+  "static_comparator": "min(sum(Z_n), N-sum(Z_n)); independently checked by LP at each horizon.",
+  "horizon_tuned_methods": [
+    "episode_hedge",
+    "sa_eafr_omd"
+  ],
+  "other_methods_use_identical_paired_prefixes": true,
+  "pattern_definition": "Start each episode at the common forecast-blind reference; ignore skips a stage update, trust performs an unpenalized prefix-feasible replan.",
+  "pattern_equivalences": {
+    "ignore_ignore": "reference",
+    "ignore_trust": "zero-loss selective causal policy (up to solver residual)",
+    "trust_ignore": "rolling",
+    "trust_trust": "rolling"
+  },
+  "information_scope": "A rule selected before the episode can still use late broadcasts; only policies whose late action law cannot use the current late information are late-blind.",
+  "uncertainty": "One sample standard error across exogenous seeds; paired Student-t 95% intervals are descriptive and unadjusted for multiplicity.",
+  "numerical_checks": {
+    "scalar_potential_checks": 50000,
+    "opportunity_checks": 50000,
+    "compression_episodes": 64,
+    "max_compressed_mix_discrepancy": 2.7755575615628914e-16,
+    "max_aggregate_weight_discrepancy": 1.249000902703301e-16
+  },
+  "occupancy_and_timing_audit": {
+    "controller_trace_episodes": 40960,
+    "evaluated_horizon_episodes": 81280,
+    "closed_form_pattern_lp_checks": 170,
+    "comparator_lp_checks": 70,
+    "max_occupancy_feasibility_residual": 8.881784197001252e-16,
+    "max_executed_occupancy_residual": 1.6653345369377348e-16,
+    "max_loss_reconstruction_residual": 1.1102230246251565e-16,
+    "max_eafr_late_formula_residual": 1.6653345369377348e-16,
+    "max_eafr_resource_equality_residual": 0.0,
+    "max_reference_spend_or_null_mass": 1.7925475918427008e-16,
+    "max_eafr_early_score": 578.5923257353853,
+    "max_eafr_late_score": 0.0,
+    "max_score_increment_excess": 2.842170943040401e-14,
+    "max_maximum_horizon_reproduction_residual": 1.1102230246251565e-16,
+    "max_pattern_equivalence_residual": 1.6925929654531974e-16,
+    "max_closed_form_pattern_lp_residual": 2.832791573980247e-17,
+    "max_comparator_lp_residual": 0.0,
+    "legacy_256_runs_reproduced": 10,
+    "max_legacy_256_loss_residual": 1.1102230246251565e-16
+  },
+  "solver": {
+    "qp_calls": 122870,
+    "lp_calls": 204980,
+    "max_feasibility_residual": 8.881784197001252e-16,
+    "max_objective_increase": 3.4614238558772214e-16,
+    "shared_master_mass_checks": 122240,
+    "max_shared_master_mass_residual": 2.0539125955565396e-14
+  },
+  "original_outputs_preserved_sha256": {
+    "experiments\\results\\raw_runs.npz": "062aad15508e9357dc8f4a2e693c705bbf89506ea15a9c869bd1b5ec73a20b2d",
+    "experiments\\results\\summary.json": "51a891db2e5f3b445b016e5de19f2ddccd4e9e8fe628a37d5718e138b161969e",
+    "experiments\\results\\verification.json": "612e8938d9588a2217b49d639ba6ed8c8cc15b5cb754586fced4b4b17f9c8420",
+    "figures\\mechanisms.pdf": "9d83b8928f7338c9c8d5a45454d7d9122a81acbea3c605c3481d26e3af1e81c9",
+    "figures\\mechanisms.png": "e0422076bd95a3addbdb2cbfb627a5266ed0fe3c7f23bf1fb2043b9e353295b9"
+  },
+  "python": "3.8.2 (tags/v3.8.2:7b3ab59, Feb 25 2020, 23:03:10) [MSC v.1916 64 bit (AMD64)]",
+  "platform": "Windows-10-10.0.19041-SP0",
+  "processor": "Intel64 Family 6 Model 141 Stepping 1, GenuineIntel",
+  "numpy": "1.24.4",
+  "scipy": "1.10.1",
+  "matplotlib": "3.7.5",
+  "seconds": 277.51566230000003,
+  "limitations": [
+    "Finite synthetic sweep; not an empirical proof of an asymptotic rate.",
+    "Known-resource specialization; does not test unknown-resource learning.",
+    "Exact occupancy losses and expected-budget feasibility; no pathwise safety claim.",
+    "Fixed-pattern ablations are not a general regret guarantee against all stage patterns.",
+    "No Roy-Das FAG-K baseline is claimed or implemented without verified algorithm equations."
+  ]
+}

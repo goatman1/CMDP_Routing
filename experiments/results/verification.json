@@ -1,0 +1,73 @@
+{
+  "checks": {
+    "scalar_potential_checks": 50000,
+    "opportunity_checks": 50000,
+    "compression_episodes": 64,
+    "max_compressed_mix_discrepancy": 2.7755575615628914e-16,
+    "max_aggregate_weight_discrepancy": 1.249000902703301e-16
+  },
+  "solver": {
+    "qp_calls": 7670,
+    "lp_calls": 12810,
+    "max_feasibility_residual": 8.881784197001252e-16,
+    "max_objective_increase": 2.498001805406602e-16,
+    "shared_master_mass_checks": 43520,
+    "max_shared_master_mass_residual": 5.662137425588298e-15
+  },
+  "seconds": 35.351201100000004,
+  "python": "3.8.2 (tags/v3.8.2:7b3ab59, Feb 25 2020, 23:03:10) [MSC v.1916 64 bit (AMD64)]",
+  "platform": "Windows-10-10.0.19041-SP0",
+  "processor": "Intel64 Family 6 Model 141 Stepping 1, GenuineIntel",
+  "numpy": "1.24.4",
+  "scipy": "1.10.1",
+  "matplotlib": "3.7.5",
+  "seed_ranges": {
+    "separation": [
+      0,
+      9
+    ],
+    "recovery": [
+      0,
+      19
+    ],
+    "resource": [
+      0,
+      19
+    ]
+  },
+  "shared_master": {
+    "controllers": [
+      "Reference",
+      "EAFR-OMD",
+      "Rolling"
+    ],
+    "d": 3,
+    "N": 2048,
+    "J": 6,
+    "rates": [
+      0.5,
+      0.25,
+      0.125,
+      0.0625,
+      0.03125,
+      0.015625,
+      0.0078125
+    ],
+    "pi": 2.3251488095238094e-05,
+    "weight_mass_identity": "W.sum() == n/N"
+  },
+  "exact_suffix_theorem": {
+    "formula": "L*log(3*N*(J+1))/log(3/2)",
+    "L": 1,
+    "bound": 26.313340434306017,
+    "runs_checked": 20,
+    "observed_suffix_loss_mean": 18.653719609049013,
+    "observed_suffix_loss_se": 0.12737400858832687,
+    "max_observed_suffix_loss": 19.884089025252315,
+    "min_slack": 6.429251409053702,
+    "all_passed": true
+  },
+  "fresh_copy_master": {
+    "exact_suffix_bound": 204.5681383783537
+  }
+}

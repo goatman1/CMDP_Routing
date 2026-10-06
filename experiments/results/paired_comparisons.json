@@ -1,0 +1,47 @@
+[
+  {
+    "contrast": "Stage: EAFR-OMD minus Hedge",
+    "mean_difference": -116.88484537346463,
+    "ci95": [
+      -120.79451469279469,
+      -112.97517605413456
+    ],
+    "paired_t_pvalue": 1.7065133148108379e-13
+  },
+  {
+    "contrast": "Stage: SA-EAFR-OMD minus EAFR-OMD",
+    "mean_difference": 17.76238158191204,
+    "ci95": [
+      17.540906820039904,
+      17.98385634378418
+    ],
+    "paired_t_pvalue": 2.3882928116685535e-17
+  },
+  {
+    "contrast": "Recovery: SA-EAFR-OMD minus EAFR-OMD",
+    "mean_difference": -481.3021242831408,
+    "ci95": [
+      -484.0285390689745,
+      -478.5757094973071
+    ],
+    "paired_t_pvalue": 4.1692943494677645e-38
+  },
+  {
+    "contrast": "Recovery: SA-EAFR-OMD minus Rolling",
+    "mean_difference": 18.653719609049013,
+    "ci95": [
+      18.38712274516724,
+      18.920316472930786
+    ],
+    "paired_t_pvalue": 1.7927647933180876e-30
+  },
+  {
+    "contrast": "Recovery: SA-EAFR-OMD minus fresh-copy EAFR-OMD",
+    "mean_difference": 2.4451408767478457,
+    "ci95": [
+      2.275139691664153,
+      2.6151420618315386
+    ],
+    "paired_t_pvalue": 1.6966108283796258e-17
+  }
+]

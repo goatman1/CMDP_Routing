@@ -1,0 +1,7 @@
+{
+  "episodes": 480,
+  "replans": 1440,
+  "exact_opportunity_checks": 1200,
+  "max_occupancy_error": 1.3231074647559455e-15,
+  "max_feasibility_error": 3.191891195797325e-15
+}
